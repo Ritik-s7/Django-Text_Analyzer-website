@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index - Home Page</title>
+</head>
+<body>
+<h1> Welcome to  Text Analyzer </h1>
+<h3> Enter your text below</h3>
+<form action = '/analyze' method = 'get'>
+
+<textarea
+        spellcheck="false" name="text" style='margin: 0px; width: 1507px; height: 429px;'>
+</textarea>
+    <br>
+    <ol>
+   <li> <input type = 'checkbox' name = 'removepunc'> Remove Punctuations  </li>
+    <li><input type = 'checkbox' name = 'CapitalAll'> Capitalize All Letters </li>
+    <li><input type = 'checkbox' name = 'newLineRemover'> New Line Remover </li>
+    <li><input type = 'checkbox' name = 'charcounter'> Count Characters</li>
+    <li><input type = 'checkbox' name = 'extraSpaceRemover'> Remove Extra Spaces </li>
+        </ol>
+    <button type = 'submit'> Analyze Text </button>
+
+</form>
+</body>
+</html>
+
