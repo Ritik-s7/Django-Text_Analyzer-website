@@ -67,7 +67,7 @@ def analyze(request):
         count = 0
         for char in djangoText:
             count+=1
-        params = {'purpose': 'Total number of characters', 'analyzed_text': count}
+        params = {'purpose': 'Total number of characters', 'analyzed_text': f"Total number of characters : {count}"}
         return render(request, 'analyze.html', params)
 
     # Remove Extra Spaces
@@ -82,7 +82,6 @@ def analyze(request):
 
     else:
         return HttpResponse("Error")
-
 
 # def capfirst(request):
 #   return HttpResponse("Capitalize First letter \n <h6> <a href = 'http://127.0.0.1:8000/'> BACK </a> </h6>")
