@@ -15,14 +15,14 @@ def index(request):
 
 def analyze(request):
     # Get the Text
-    djangoText = request.GET.get('text', 'default')
+    djangoText = request.POST.get('text', 'default')
 
     # Check the checkbox values
-    removepunc = request.GET.get('removepunc', 'off')
-    CapitalAll = request.GET.get('CapitalAll', 'off')
-    newLineRemover = request.GET.get('newLineRemover','off')
-    charcounter = request.GET.get('charcounter','off')
-    extraSpaceRemover = request.GET.get('extraSpaceRemover','off')
+    removepunc = request.POST.get('removepunc', 'off')
+    CapitalAll = request.POST.get('CapitalAll', 'off')
+    newLineRemover = request.POST.get('newLineRemover','off')
+    charcounter = request.POST.get('charcounter','off')
+    extraSpaceRemover = request.POST.get('extraSpaceRemover','off')
 
     analyzed = djangoText
 
@@ -56,7 +56,7 @@ def analyze(request):
     elif newLineRemover == 'on':
         analyzed = ""
         for char in djangoText:
-            if char is not "\n":
+            if char is not "\n" and char is not "\r":
                 analyzed += char
         params = {'purpose': 'Removed New Line', 'analyzed_text': analyzed}
         return render(request, 'analyze.html', params)
