@@ -3,15 +3,8 @@ from django.shortcuts import render
 
 
 def index(request):
-    """return HttpResponse("<h1> Home </h1>\n <h6> <a href = 'http://127.0.0.1:8000/removePunc'> Remove punctuation </a> </h6> \n "
-                        "<h6> <a href = "
-                        "'http://127.0.0.1:8000/capitalizefirst'> Capitalize first letter </a> </h6> \n <h6> <a href "
-                        "= 'http://127.0.0.1:8000/newlineremove'> Remove New Line </a> </h6> \n <h6> <a href = "
-                        "'http://127.0.0.1:8000/spaceremove'> Remove Space </a> </h6> \n <h6> <a href = "
-                        "'http://127.0.0.1:8000/charcount'> Count Characters </a> </h6>")
-    """
-    return render(request, 'index.html')
 
+    return render(request, 'index.html')
 
 def analyze(request):
     # Get the Text
@@ -20,11 +13,12 @@ def analyze(request):
     # Check the checkbox values
     removepunc = request.POST.get('removepunc', 'off')
     CapitalAll = request.POST.get('CapitalAll', 'off')
-    newLineRemover = request.POST.get('newLineRemover','off')
-    charcounter = request.POST.get('charcounter','off')
-    extraSpaceRemover = request.POST.get('extraSpaceRemover','off')
+    newLineRemover = request.POST.get('newLineRemover', 'off')
+    charcounter = request.POST.get('charcounter', 'off')
+    extraSpaceRemover = request.POST.get('extraSpaceRemover', 'off')
 
-    analyzed = djangoText
+    analyzed = "Please choose atleast one option on previous page"
+    params = {'purpose': 'ERROR', 'analyzed_text': analyzed}
 
     # Remove Punctuations
     if removepunc == "on":
@@ -33,64 +27,48 @@ def analyze(request):
         for char in djangoText:
             if char not in punctuations:
                 analyzed += char
-        if CapitalAll == 'on':
-            analyzed2 = ""
-            for char in analyzed:
-                analyzed2 += char.capitalize()
-            params = {'purpose': 'Removed Punctuations and  Capitalized Text', 'analyzed_text': analyzed2}
-            return render(request, 'analyze.html', params)
-        else:
-            params = {'purpose': 'Removed Punctuations', 'analyzed_text': analyzed}
-            return render(request, 'analyze.html', params)
+        params = {'purpose': 'Removed Punctuations', 'analyzed_text': analyzed}
+        djangoText = analyzed
 
     # Capitalizing First letter
     if CapitalAll == 'on':
-        analyzed2 = ""
-        for char in analyzed:
-            analyzed2 += char.capitalize()
-        params = {'purpose': 'Capitalized Text', 'analyzed_text': analyzed2}
-        return render(request, 'analyze.html', params)
+        analyzed = ""
+        for char in djangoText:
+            analyzed += char.capitalize()
+        params = {'purpose': 'Capitalized Text', 'analyzed_text': analyzed}
+        djangoText = analyzed
 
     # Remove New Lines
 
-    elif newLineRemover == 'on':
+    if newLineRemover == 'on':
         analyzed = ""
         for char in djangoText:
             if char is not "\n" and char is not "\r":
                 analyzed += char
         params = {'purpose': 'Removed New Line', 'analyzed_text': analyzed}
-        return render(request, 'analyze.html', params)
+        djangoText = analyzed
 
     # Count total characters
 
     elif charcounter == 'on':
         count = 0
         for char in djangoText:
-            count+=1
-        params = {'purpose': 'Total number of characters', 'analyzed_text': f"Total number of characters : {count}"}
-        return render(request, 'analyze.html', params)
+            count += 1
+        counter = {'purpose': 'Total number of characters', 'analyzed_text': f"Total number of characters : {count}"}
+        return render(request, 'analyze.html', counter)
 
     # Remove Extra Spaces
 
-    elif extraSpaceRemover == 'on':
+    if extraSpaceRemover == 'on':
         analyzed = ""
         for index, char in enumerate(djangoText):
-            if not(djangoText[index] == " " and djangoText[index+1] == " "):
+            if not (djangoText[index] == " " and djangoText[index + 1] == " "):
                 analyzed = analyzed + char
         params = {'purpose': 'Removed Extra Spaces', 'analyzed_text': analyzed}
-        return render(request, 'analyze.html', params)
 
-    else:
-        return HttpResponse("Error")
 
-# def capfirst(request):
-#   return HttpResponse("Capitalize First letter \n <h6> <a href = 'http://127.0.0.1:8000/'> BACK </a> </h6>")
-'''
-def newlineremove(request):
-    return HttpResponse("Remove Newline \n <h6> <a href = 'http://127.0.0.1:8000/'> BACK </a> </h6>")
-def spaceremove(request):
-    return HttpResponse("Remove space \n <h6> <a href = 'http://127.0.0.1:8000/'> BACK </a> </h6>")
-def charcount(request):
-    return HttpResponse("Count characters \n <h6> <a href = 'http://127.0.0.1:8000/'> BACK </a> </h6>")
+    return render(request, 'analyze.html', params)
 
-'''
+
+def ContactUs(request):
+    return render(request,"ContactUs.html")
